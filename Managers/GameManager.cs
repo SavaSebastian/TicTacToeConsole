@@ -10,6 +10,7 @@ namespace TicTacToeConsole.Managers
         public Player Player2 { get; private set; }
         public Board Board { get; private set; }
         public GameStates GameState { get; private set; }
+        public int Round { get; private set; }
 
         public GameManager()
         {
@@ -27,6 +28,8 @@ namespace TicTacToeConsole.Managers
         {
             Console.WriteLine("Welcom to the customizable TicTacToe game!");
             Console.WriteLine("Do you want to play a default game? (Y/N)");
+
+            Round = 0;
 
             string answer;
 
@@ -100,6 +103,8 @@ namespace TicTacToeConsole.Managers
                 isValid = true;
             }
 
+            Round++;
+
             if (CheckWinner.IsWinner(Board))
             {
                 if (Player1.State == PlayerStates.Playing)
@@ -127,9 +132,13 @@ namespace TicTacToeConsole.Managers
             }
 
             PrintBoard();
-        }
 
-        
+            if (Round == 9)
+            {
+                Console.WriteLine("Draw!");
+                GameState = GameStates.End;
+            }
+        }
 
         public void EndGame()
         {
